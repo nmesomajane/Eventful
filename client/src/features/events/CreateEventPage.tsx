@@ -17,7 +17,8 @@ const schema = z.object({
   status: z.enum(["draft", "published"]).default("draft"),
 });
 
-type FormData = z.infer<typeof schema>;
+type FormInput = z.input<typeof schema>;
+type FormData = z.output<typeof schema>;
 
 export default function CreateEventPage() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function CreateEventPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(schema), defaultValues: { status: "draft" } });
+  } = useForm<FormInput, any, FormData>({ resolver: zodResolver(schema), defaultValues: { status: "draft" } });
 
   const onSubmit = async (data: FormData) => {
     console.log("[CreateEventPage] submitting event:", data.title);
