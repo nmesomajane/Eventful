@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./modules/auth/auth.routes";
 import { errorHandler } from "./middleware/errorHandler";
 import { env } from "./config/env";
+import eventRoutes from "./modules/events/events.routes";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/events", eventRoutes);
 
 app.use(errorHandler);
 
