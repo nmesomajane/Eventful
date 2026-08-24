@@ -28,7 +28,7 @@ export default function Navbar() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-10 border-b bg-white/80 backdrop-blur">
+    <nav className="sticky top-0 z-10 bg-white/80 shadow-sm backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/dashboard" className="text-lg font-bold text-blue-600">
           Eventful

@@ -11,6 +11,11 @@ const schema = z
     description: z.string().min(10, "Description too short"),
     category: z.string().optional(),
     location: z.string().min(3, "Location required"),
+    coverImageUrl: z
+      .string()
+      .url("Must be a valid URL")
+      .optional()
+      .or(z.literal("")),
     startDate: z.string().min(1, "Start date required"),
     endDate: z.string().min(1, "End date required"),
     capacity: z.coerce.number().int().positive("Must be a positive number"),
@@ -135,6 +140,29 @@ export default function CreateEventPage() {
           label="Category (optional)"
           register={register("category")}
         />
+
+        <div>
+          <label
+            htmlFor="coverImage"
+            className="block text-sm font-medium mb-2"
+          >
+            Event Cover Image
+          </label>
+
+          <input
+            id="coverImage"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              if (file) {
+                console.log("Selected file:", file);
+              }
+            }}
+            className="peer w-full rounded-lg border border-gray-300 bg-white py-5 pl-7 pr-3 text-sm outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          />
+        </div>
 
         {/* Dates — explicit labels since datetime-local doesn't play nicely with floating labels */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
