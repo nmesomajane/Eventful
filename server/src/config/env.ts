@@ -17,4 +17,7 @@ export const env = {
   JWT_ACCESS_EXPIRES_IN: "15m",
   JWT_REFRESH_EXPIRES_IN: "7d",
   CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
+  PAYSTACK_SECRET_KEY: required("PAYSTACK_SECRET_KEY"),
+ PAYSTACK_BASE_URL: process.env.PAYSTACK_BASE_URL || "https://api.paystack.co",
 };
+
