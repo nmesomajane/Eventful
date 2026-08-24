@@ -47,9 +47,21 @@ function FloatingInput({
     <div>
       <div className="relative">
         {textarea ? (
-          <textarea id={id} placeholder=" " rows={3} className={shared} {...register} />
+          <textarea
+            id={id}
+            placeholder=" "
+            rows={3}
+            className={shared}
+            {...register}
+          />
         ) : (
-          <input id={id} type={type} placeholder=" " className={shared} {...register} />
+          <input
+            id={id}
+            type={type}
+            placeholder=" "
+            className={shared}
+            {...register}
+          />
         )}
         <label
           htmlFor={id}
@@ -76,7 +88,14 @@ export default function CreateEventPage() {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log("[CreateEventPage] submitting event:", data.title, "start:", data.startDate, "end:", data.endDate);
+    console.log(
+      "[CreateEventPage] submitting event:",
+      data.title,
+      "start:",
+      data.startDate,
+      "end:",
+      data.endDate,
+    );
     try {
       await createEvent(data);
       toast.success("Event created");
@@ -92,7 +111,12 @@ export default function CreateEventPage() {
       <h1 className="mb-6 text-2xl font-bold text-gray-900">Create Event</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <FloatingInput id="title" label="Title" register={register("title")} error={errors.title?.message} />
+        <FloatingInput
+          id="title"
+          label="Title"
+          register={register("title")}
+          error={errors.title?.message}
+        />
         <FloatingInput
           id="description"
           label="Description"
@@ -100,13 +124,25 @@ export default function CreateEventPage() {
           error={errors.description?.message}
           textarea
         />
-        <FloatingInput id="location" label="Location" register={register("location")} error={errors.location?.message} />
-        <FloatingInput id="category" label="Category (optional)" register={register("category")} />
+        <FloatingInput
+          id="location"
+          label="Location"
+          register={register("location")}
+          error={errors.location?.message}
+        />
+        <FloatingInput
+          id="category"
+          label="Category (optional)"
+          register={register("category")}
+        />
 
         {/* Dates — explicit labels since datetime-local doesn't play nicely with floating labels */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="startDate" className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="startDate"
+              className="mb-1.5 block text-sm font-medium text-gray-700"
+            >
               Start date
             </label>
             <input
@@ -115,10 +151,17 @@ export default function CreateEventPage() {
               {...register("startDate")}
               className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
-            {errors.startDate && <p className="mt-1 text-xs text-red-500">{errors.startDate.message}</p>}
+            {errors.startDate && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.startDate.message}
+              </p>
+            )}
           </div>
           <div>
-            <label htmlFor="endDate" className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="endDate"
+              className="mb-1.5 block text-sm font-medium text-gray-700"
+            >
               End date
             </label>
             <input
@@ -127,7 +170,11 @@ export default function CreateEventPage() {
               {...register("endDate")}
               className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
-            {errors.endDate && <p className="mt-1 text-xs text-red-500">{errors.endDate.message}</p>}
+            {errors.endDate && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.endDate.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -163,7 +210,10 @@ export default function CreateEventPage() {
         </div>
 
         <div>
-          <label htmlFor="status" className="mb-1.5 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="status"
+            className="mb-1.5 block text-sm font-medium text-gray-700"
+          >
             Visibility
           </label>
           <select
