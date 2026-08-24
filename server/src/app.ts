@@ -7,6 +7,7 @@ import authRoutes from "./modules/auth/auth.routes";
 import { errorHandler } from "./middleware/errorHandler";
 import { env } from "./config/env";
 import eventRoutes from "./modules/events/events.routes";
+import ticketRoutes from "./modules/tickets/tickets.routes";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/events", eventRoutes);
+app.use("/api/v1/tickets", ticketRoutes);
 
 app.use(errorHandler);
 

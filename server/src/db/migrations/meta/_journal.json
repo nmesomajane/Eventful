@@ -15,6 +15,13 @@
       "when": 1787480317726,
       "tag": "0001_rainy_sandman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1787577695994,
+      "tag": "0002_empty_boom_boom",
+      "breakpoints": true
     }
   ]
 }
