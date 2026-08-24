@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-export const createEventSchema = z.object({
+const eventFields = {
   title: z.string().min(3).max(255),
-  description: z.string().min(10),
+  description: z.string().min(3).max(1000),
   category: z.string().max(100).optional(),
   location: z.string().min(3).max(255),
   startDate: z.coerce.date(),
@@ -11,12 +11,28 @@ export const createEventSchema = z.object({
   ticketPrice: z.number().nonnegative().default(0),
   coverImageUrl: z.string().url().optional(),
   status: z.enum(["draft", "published"]).default("draft"),
-}).refine((data) => data.endDate > data.startDate, {
-  message: "endDate must be after startDate",
-  path: ["endDate"],
-});
+};
 
-export const updateEventSchema = createEventSchema.partial();
+export const createEventSchema = z
+  .object(eventFields)
+  .refine((data) => data.endDate > data.startDate, {
+    message: "endDate must be after startDate",
+    path: ["endDate"],
+  });
+
+export const updateEventSchema = z
+  .object(eventFields)
+  .partial()
+  .refine(
+    (data) =>
+      data.startDate === undefined ||
+      data.endDate === undefined ||
+      data.endDate > data.startDate,
+    {
+      message: "endDate must be after startDate",
+      path: ["endDate"],
+    }
+  );
 
 export const listEventsQuerySchema = z.object({
   category: z.string().optional(),
