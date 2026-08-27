@@ -4,6 +4,9 @@ import LoginPage from "../features/auth/LoginPage";
 import EventsListPage from "../features/events/EventsListPage";
 import MyEventsPage from "../features/events/MyEventsPage";
 import CreateEventPage from "../features/events/CreateEventPage";
+import EventDetailPage from "../features/events/EventDetailPage";
+import PaymentCallbackPage from "../features/tickets/PaymentCallbackPage";
+import MyTicketsPage from "../features/tickets/MyTicketsPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -23,7 +26,12 @@ export default function AppRoutes() {
       </Route>
 
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="*" element={<div className="p-6">404 - Page not found</div>} />
+
+      <Route element={<ProtectedRoute allowedRoles={["attendee"]} />}>
+        <Route path="/my-tickets" element={<MyTicketsPage />} />
+        <Route path="/events/:id" element={<EventDetailPage />} />
+        <Route path="/payment/callback" element={<PaymentCallbackPage />} />
+      </Route>
     </Routes>
   );
 }

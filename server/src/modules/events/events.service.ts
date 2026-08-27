@@ -110,3 +110,20 @@ async function invalidatePublicListCache() {
     console.log("[events.service] invalidated", keys.length, "list cache entries");
   }
 }
+
+async function safeCacheGet(key: string): Promise<string | null> {
+  try {
+    return await redis.get(key);
+  } catch (err) {
+    console.log("[redis] read failed, falling back to DB:", (err as Error).message);
+    return null;
+  }
+}
+
+async function safeCacheSet(key: string, value: string, ttl: number) {
+  try {
+    await redis.set(key, value, "EX", ttl);
+  } catch (err) {
+    console.log("[redis] write failed, skipping cache:", (err as Error).message);
+  }
+}
