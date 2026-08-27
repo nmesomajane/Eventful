@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, decimal, boolean, timestamp, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar, decimal, boolean, timestamp, pgEnum, integer } from "drizzle-orm/pg-core";
 import { users } from "./users";
 import { events } from "./events";
 
@@ -14,6 +14,7 @@ export const tickets = pgTable("tickets", {
   qrCode: varchar("qr_code", { length: 255 }).unique(), // set once paid
   isScanned: boolean("is_scanned").notNull().default(false),
   scannedAt: timestamp("scanned_at"),
+  customReminderOffsets: integer("custom_reminder_offsets").array(),  
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

@@ -14,6 +14,7 @@ export const events = pgTable("events", {
   endDate: timestamp("end_date").notNull(),
   capacity: integer("capacity").notNull(),
   ticketPrice: decimal("ticket_price", { precision: 10, scale: 2 }).notNull().default("0"),
+  reminderOffsets: integer("reminder_offsets").array().notNull().default([1440]),
   coverImageUrl: varchar("cover_image_url", { length: 500 }),
   status: eventStatusEnum("status").notNull().default("draft"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
