@@ -7,6 +7,7 @@ import CreateEventPage from "../features/events/CreateEventPage";
 import EventDetailPage from "../features/events/EventDetailPage";
 import PaymentCallbackPage from "../features/tickets/PaymentCallbackPage";
 import MyTicketsPage from "../features/tickets/MyTicketsPage";
+import AnalyticsPage from "../features/analytics/AnalyticsPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -23,6 +24,7 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={["organizer"]} />}>
         <Route path="/organizer/events" element={<MyEventsPage />} />
         <Route path="/organizer/events/new" element={<CreateEventPage />} />
+        <Route path="/organizer/analytics" element={<AnalyticsPage />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/login" replace />} />

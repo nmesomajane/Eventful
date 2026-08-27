@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Calendar, PlusCircle, Ticket, LogOut, LayoutGrid } from "lucide-react";
+import { Calendar, PlusCircle, Ticket, LogOut, LayoutGrid,BarChart3  } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
+
 
 const HIDDEN_ON = ["/login", "/signup"];
 
@@ -53,6 +54,9 @@ export default function Navbar() {
               <Link to="/organizer/events/new" className={linkClass("/organizer/events/new")}>
                 <PlusCircle className="h-4 w-4" /> Create Event
               </Link>
+              <Link to="/organizer/analytics" className={linkClass("/organizer/analytics")}>
+  <BarChart3 className="h-4 w-4" /> Analytics
+</Link>
             </>
           )}
 
