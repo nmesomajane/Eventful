@@ -9,6 +9,7 @@ const eventFields = {
   endDate: z.coerce.date(),
   capacity: z.number().int().positive(),
   ticketPrice: z.number().nonnegative().default(0),
+  reminderOffsets: z.array(z.number().int().positive()).min(1).default([1440]),
   coverImageUrl: z.string().url().optional(),
   status: z.enum(["draft", "published"]).default("draft"),
 };

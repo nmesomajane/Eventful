@@ -22,6 +22,13 @@
       "when": 1787577695994,
       "tag": "0002_empty_boom_boom",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1787868022273,
+      "tag": "0003_redundant_warpath",
+      "breakpoints": true
     }
   ]
 }
