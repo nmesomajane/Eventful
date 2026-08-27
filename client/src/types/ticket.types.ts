@@ -17,6 +17,7 @@ export interface Ticket {
     startDate: string;
     location: string;
   };
+  customReminderOffsets: number[] | null;
 }
 
 export interface PurchaseResponse {

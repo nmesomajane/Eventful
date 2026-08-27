@@ -4,6 +4,10 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useEventStore } from "../../store/eventStore";
+import { Controller } from "react-hook-form";
+import ReminderPicker from "../../components/ReminderPicker";
+
+
 
 const schema = z
   .object({
@@ -26,6 +30,7 @@ const schema = z
     message: "End date must be after start date",
     path: ["endDate"],
   });
+  
 
 type FormData = z.infer<typeof schema>;
 
@@ -102,7 +107,7 @@ export default function CreateEventPage() {
       data.endDate,
     );
     try {
-      await createEvent(data);
+      await createEvent({ ...data, reminderOffsets: [] });
       toast.success("Event created");
       navigate("/organizer/events");
     } catch (err: any) {
@@ -110,6 +115,7 @@ export default function CreateEventPage() {
       toast.error(err?.response?.data?.error || "Failed to create event");
     }
   };
+  
 
   return (
     <div className="mx-auto mt-10 max-w-lg px-4 pb-16">

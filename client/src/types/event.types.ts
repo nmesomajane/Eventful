@@ -27,5 +27,6 @@ export interface CreateEventPayload {
   capacity: number;
   ticketPrice: number;
   coverImageUrl?: string;
+  reminderOffsets: number[];
   status: "draft" | "published";
 }
