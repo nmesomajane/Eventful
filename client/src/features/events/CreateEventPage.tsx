@@ -1,13 +1,10 @@
-import { useForm, type Resolver } from "react-hook-form";
+import { useForm, type Resolver, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useEventStore } from "../../store/eventStore";
-import { Controller } from "react-hook-form";
 import ReminderPicker from "../../components/ReminderPicker";
-
-
 
 const schema = z
   .object({
@@ -25,12 +22,14 @@ const schema = z
     capacity: z.coerce.number().int().positive("Must be a positive number"),
     ticketPrice: z.coerce.number().nonnegative().default(0),
     status: z.enum(["draft", "published"]).default("draft"),
+    reminderOffsets: z
+      .array(z.number().int().positive())
+      .min(1, "Pick at least one reminder"),
   })
   .refine((data) => new Date(data.endDate) > new Date(data.startDate), {
     message: "End date must be after start date",
     path: ["endDate"],
   });
-  
 
 type FormData = z.infer<typeof schema>;
 
@@ -91,10 +90,11 @@ export default function CreateEventPage() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema) as Resolver<FormData>,
-    defaultValues: { status: "draft" },
+    defaultValues: { status: "draft", reminderOffsets: [1440] },
   });
 
   const onSubmit = async (data: FormData) => {
@@ -105,9 +105,11 @@ export default function CreateEventPage() {
       data.startDate,
       "end:",
       data.endDate,
+      "reminders:",
+      data.reminderOffsets,
     );
     try {
-      await createEvent({ ...data, reminderOffsets: [] });
+      await createEvent(data);
       toast.success("Event created");
       navigate("/organizer/events");
     } catch (err: any) {
@@ -115,7 +117,6 @@ export default function CreateEventPage() {
       toast.error(err?.response?.data?.error || "Failed to create event");
     }
   };
-  
 
   return (
     <div className="mx-auto mt-10 max-w-lg px-4 pb-16">
@@ -147,6 +148,18 @@ export default function CreateEventPage() {
           register={register("category")}
         />
 
+        {/*
+          NOTE: this is a local file picker only — it currently just logs the
+          selected File object and does not populate coverImageUrl. Your
+          backend schema expects a URL string, not binary file data, so this
+          input isn't wired to the form yet. Two ways to close that gap:
+            1) Swap this back to a plain URL text input (fastest — matches
+               what the backend already expects, no new endpoint needed).
+            2) Keep the file picker, but add a real upload step (e.g. to
+               Cloudinary/S3) on file select, then setValue("coverImageUrl", url).
+          Left as-is per your file so nothing is silently overwritten —
+          let me know which direction you want and I'll wire it up.
+        */}
         <div>
           <label
             htmlFor="coverImage"
@@ -242,6 +255,20 @@ export default function CreateEventPage() {
             </label>
           </div>
         </div>
+
+        {/* Reminder offsets — now actually wired into the form */}
+        <Controller
+          name="reminderOffsets"
+          control={control}
+          render={({ field }) => (
+            <ReminderPicker selected={field.value} onChange={field.onChange} />
+          )}
+        />
+        {errors.reminderOffsets && (
+          <p className="mt-1 text-xs text-red-500">
+            {errors.reminderOffsets.message}
+          </p>
+        )}
 
         <div>
           <label
