@@ -6,6 +6,7 @@ import { getEventById } from "../../api/events.api";
 import { useTicketStore } from "../../store/ticketStore";
 import { useAuthStore } from "../../store/authStore";
 import type { Event } from "../../types/event.types";
+// import {ShareButton} from "../../components/ShareButton"
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=500&fit=crop";
