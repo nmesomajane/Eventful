@@ -12,6 +12,8 @@ import remindersRoutes from "./modules/reminders/reminders.routes";
 import analyticsRoutes from "./modules/analytics/analytics.routes";
 import webhookRoutes from "./modules/webhooks/webhooks.routes";
 import { apiRateLimiter } from "./middleware/rateLimiter";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 
 
 const app = express();
@@ -22,6 +24,7 @@ app.use(compression());
 app.use(express.json());
 app.use(cookieParser());
 
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/events", eventRoutes);
 app.use("/api/v1/tickets", ticketRoutes);
@@ -30,5 +33,6 @@ app.use("/api/v1/analytics", analyticsRoutes);
 app.use("/api/v1/webhooks", webhookRoutes);
 app.use(apiRateLimiter);
 app.use(errorHandler);
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 export default app;
