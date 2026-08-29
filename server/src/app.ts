@@ -11,6 +11,8 @@ import ticketRoutes from "./modules/tickets/tickets.routes";
 import remindersRoutes from "./modules/reminders/reminders.routes";
 import analyticsRoutes from "./modules/analytics/analytics.routes";
 import webhookRoutes from "./modules/webhooks/webhooks.routes";
+import { apiRateLimiter } from "./middleware/rateLimiter";
+
 
 const app = express();
 
@@ -26,6 +28,7 @@ app.use("/api/v1/tickets", ticketRoutes);
 app.use("/api/v1/reminders", remindersRoutes);
 app.use("/api/v1/analytics", analyticsRoutes);
 app.use("/api/v1/webhooks", webhookRoutes);
+app.use(apiRateLimiter);
 app.use(errorHandler);
 
 export default app;
