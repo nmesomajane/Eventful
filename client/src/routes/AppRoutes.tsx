@@ -19,6 +19,8 @@ export default function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<EventsListPage />} />
+        <Route path="/events/:id" element={<EventDetailPage />} />
+        <Route path="/payment/callback" element={<PaymentCallbackPage />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["organizer"]} />}>
@@ -31,8 +33,6 @@ export default function AppRoutes() {
 
       <Route element={<ProtectedRoute allowedRoles={["attendee"]} />}>
         <Route path="/my-tickets" element={<MyTicketsPage />} />
-        <Route path="/events/:id" element={<EventDetailPage />} />
-        <Route path="/payment/callback" element={<PaymentCallbackPage />} />
       </Route>
     </Routes>
   );

@@ -6,7 +6,7 @@ import { getEventById } from "../../api/events.api";
 import { useTicketStore } from "../../store/ticketStore";
 import { useAuthStore } from "../../store/authStore";
 import type { Event } from "../../types/event.types";
-// import {ShareButton} from "../../components/ShareButton"
+import ShareButton from "../../components/ShareButton";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=500&fit=crop";
@@ -109,13 +109,16 @@ export default function EventDetailPage() {
           )}
           <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{event.title}</h1>
         </div>
-        <span
-          className={`shrink-0 rounded-full px-4 py-2 text-base font-semibold ${
-            isFree ? "bg-green-100 text-green-700" : "bg-blue-600 text-white"
-          }`}
-        >
-          {isFree ? "Free" : `₦${Number(event.ticketPrice).toLocaleString()}`}
-        </span>
+        <div className="flex shrink-0 items-center gap-2">
+          <span
+            className={`rounded-full px-4 py-2 text-base font-semibold ${
+              isFree ? "bg-green-100 text-green-700" : "bg-blue-600 text-white"
+            }`}
+          >
+            {isFree ? "Free" : `₦${Number(event.ticketPrice).toLocaleString()}`}
+          </span>
+          <ShareButton title={event.title} url={window.location.href} />
+        </div>
       </div>
 
       <div className="mt-4 space-y-2 rounded-xl bg-gray-50 p-4">
